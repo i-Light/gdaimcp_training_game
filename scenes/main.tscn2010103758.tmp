@@ -1,0 +1,80 @@
+[gd_scene load_steps=7 format=3 uid="uid://jg2gxgbiw76d"]
+
+[ext_resource type="Script" uid="uid://ejwuep1vdp2f" path="res://script/score counter.gd" id="1_o5qli"]
+[ext_resource type="Script" uid="uid://cnbvvyye5ml2s" path="res://script/main.gd" id="1_sugp2"]
+[ext_resource type="Script" uid="uid://nh5yiqeoe11e" path="res://script/ball.gd" id="2_0wfyh"]
+
+[sub_resource type="Gradient" id="Gradient_sgp6g"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.9177215)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_o5qli"]
+gradient = SubResource("Gradient_sgp6g")
+width = 32
+height = 32
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0wfyh"]
+radius = 16.0
+
+[node name="main" type="Node"]
+script = ExtResource("1_sugp2")
+
+[node name="ui" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="ui"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+theme_override_constants/margin_top = 30
+script = ExtResource("1_o5qli")
+
+[node name="Timer" type="Timer" parent="ui/MarginContainer"]
+autostart = true
+
+[node name="score" type="Label" parent="ui/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "0"
+
+[node name="game" type="Node2D" parent="."]
+
+[node name="Spawn" type="Marker2D" parent="game"]
+position = Vector2(-18, 270)
+
+[node name="ball" type="Area2D" parent="game/Spawn"]
+script = ExtResource("2_0wfyh")
+
+[node name="TextureRect" type="TextureRect" parent="game/Spawn/ball"]
+texture_filter = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_o5qli")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="game/Spawn/ball"]
+shape = SubResource("CircleShape2D_0wfyh")
+
+[connection signal="timeout" from="ui/MarginContainer/Timer" to="ui/MarginContainer" method="_on_timer_timeout"]

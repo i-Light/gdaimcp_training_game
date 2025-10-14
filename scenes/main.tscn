@@ -1,0 +1,76 @@
+[gd_scene load_steps=4 format=3 uid="uid://jg2gxgbiw76d"]
+
+[ext_resource type="Script" uid="uid://ejwuep1vdp2f" path="res://script/score counter.gd" id="1_o5qli"]
+[ext_resource type="Script" uid="uid://cnbvvyye5ml2s" path="res://script/main.gd" id="1_sugp2"]
+[ext_resource type="Script" uid="uid://bmkswxqiboep1" path="res://script/spawn.gd" id="3_jyhfs"]
+
+[node name="main" type="Node"]
+script = ExtResource("1_sugp2")
+
+[node name="game" type="Node2D" parent="."]
+
+[node name="Spawn" type="Marker2D" parent="game"]
+position = Vector2(-32, 270)
+script = ExtResource("3_jyhfs")
+
+[node name="Timer" type="Timer" parent="game/Spawn"]
+wait_time = 0.5
+autostart = true
+
+[node name="ui" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="score_container" type="MarginContainer" parent="ui"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+theme_override_constants/margin_top = 30
+script = ExtResource("1_o5qli")
+
+[node name="Timer" type="Timer" parent="ui/score_container"]
+autostart = true
+
+[node name="score" type="Label" parent="ui/score_container"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "0"
+
+[node name="restart_container" type="PanelContainer" parent="ui"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ui/restart_container"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="score" type="Label" parent="ui/restart_container/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Game Over!"
+
+[node name="restart" type="Button" parent="ui/restart_container/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Restart"
+
+[connection signal="timeout" from="game/Spawn/Timer" to="game/Spawn" method="_on_timer_timeout"]
+[connection signal="timeout" from="ui/score_container/Timer" to="ui/score_container" method="_on_timer_timeout"]
+[connection signal="pressed" from="ui/restart_container/VBoxContainer/restart" to="." method="_on_restart_pressed"]

@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=3 uid="uid://txy8kj2ppuee"]
+
+[ext_resource type="Script" uid="uid://nh5yiqeoe11e" path="res://script/ball.gd" id="1_7s4qf"]
+
+[sub_resource type="Gradient" id="Gradient_sgp6g"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.9177215)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_o5qli"]
+gradient = SubResource("Gradient_sgp6g")
+width = 32
+height = 32
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[node name="ball" type="TextureRect"]
+texture_filter = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_o5qli")
+script = ExtResource("1_7s4qf")
