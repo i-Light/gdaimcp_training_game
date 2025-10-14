@@ -10,4 +10,3 @@ func _on_timer_timeout() -> void:
 	timer.wait_time = 0.5 / G.progress_counter
 	var ball = BALL.instantiate()
 	add_child(ball)
-	print(timer.wait_time)

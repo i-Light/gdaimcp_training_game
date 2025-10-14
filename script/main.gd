@@ -5,6 +5,7 @@ extends Node
 
 func _ready() -> void:
 	G.gameover.connect(_on_gameover, CONNECT_ONE_SHOT)
+	Engine.time_scale = 5
 
 func _on_gameover()->void:
 	game.process_mode = Node.PROCESS_MODE_DISABLED
